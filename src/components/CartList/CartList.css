@@ -1,0 +1,16 @@
+.cartList {
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.orderButton {
+    width: 100px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #000;
+    cursor: pointer;
+    box-shadow: 1px 1px 0px 0px rgba(50, 50, 50, 0.75);
+    outline: none;
+    color: #000;
+}

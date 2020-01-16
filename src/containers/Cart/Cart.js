@@ -1,17 +1,37 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {getPrice, initDishes, removeFromCart} from "../../store/actions/cartActions";
 import './Cart.css';
-import List from "../../components/UI/List/List";
+import List from "../../components/List/List";
+import Modal from "../../components/UI/Modal/Modal";
+import CartList from "../../components/CartList/CartList";
 import Button from "../../components/UI/Button/Button";
 
 let list = null;
 
 class Cart extends Component {
+    state = {
+        purchasing: false,
+    };
 
     componentDidMount() {
         this.props.initDishes();
     }
+
+    isPurchasable = () => {
+        const sum = Object.keys(this.props.dishes)
+            .map(dishKey => this.props.dishes[dishKey])
+            .reduce((sum, el) => sum + el, 0);
+        return sum > 0;
+    };
+
+    purchaseHandler = () => {
+        this.setState({purchasing: true});
+    };
+
+    purchaseCancelHandler = () => {
+        this.setState({purchasing: false});
+    };
 
     render() {
 
@@ -30,16 +50,24 @@ class Cart extends Component {
         }
 
         return (
-            <div className='Cart'>
-                <h2>Cart</h2>
-                <div className='cartList'>
-                    {list}
-                    <hr style={{width: '50%', marginBottom: '30px'}}/>
-                    <p>Доставка: {this.props.delivery}</p>
-                    <p>Итого: {this.props.total}</p>
+            <Fragment>
+                <div className='Cart'>
+                    <h2>Cart</h2>
+                    <CartList
+                        delivery={this.props.delivery}
+                        total={this.props.total}
+                        purchasable={this.isPurchasable()}
+                        purchaseHandler={this.purchaseHandler}>
+                        {list}
+                    </CartList>
                 </div>
-                <Button>Place order</Button>
-            </div>
+                <Modal
+                    show={this.state.purchasing}
+                    close={this.purchaseCancelHandler}
+                >
+                </Modal>
+            </Fragment>
+
         );
     }
 }
