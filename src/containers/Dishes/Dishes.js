@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {getDishes} from "../../store/actions/dishesActions";
 import {connect} from "react-redux";
 import Card from "../../components/UI/Card/Card";
+import {addToCart} from "../../store/actions/cartActions";
 
 
 class Dishes extends Component {
@@ -17,6 +18,7 @@ class Dishes extends Component {
                 name={dish.name}
                 image={dish.image}
                 price={dish.price}
+                toCartAdded={() => this.props.addToCart(dish.name)}
             />
         });
 
@@ -32,7 +34,8 @@ const mapStateToProps = state => ({
     dishes: state.dishes.dishes,
 });
 const mapDispatchToProps = dispatch => ({
-    getDishes: () => dispatch(getDishes())
+    getDishes: () => dispatch(getDishes()),
+    addToCart: dish => dispatch(addToCart(dish))
 });
 
 

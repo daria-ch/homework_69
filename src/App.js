@@ -1,20 +1,24 @@
 import React, {Component} from 'react';
 import Dishes from "./containers/Dishes/Dishes";
+import Cart from "./containers/Cart/Cart";
 
 class App extends Component {
 
 
     render() {
         const appStyle = {
-            maxWidth: '1000px',
+            maxWidth: '900px',
             margin: '20px auto',
-            border: '1px solid #000'
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '10px'
         };
 
 
         return (
             <div style={appStyle}>
                 <Dishes/>
+                <Cart/>
             </div>
         );
     }

@@ -11,7 +11,7 @@ const Card = props => {
                 <span>{props.name}</span>
                 <span><b>{props.price} KGS</b></span>
             </div>
-            <Button>Add to Cart</Button>
+            <Button onClick={props.toCartAdded}>Add to Cart</Button>
         </div>
     );
 };
