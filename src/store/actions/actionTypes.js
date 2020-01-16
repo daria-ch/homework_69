@@ -7,4 +7,6 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const INIT_DISHES = 'INIT_DISHES';
 export const GET_PRICE = 'GET_PRICE';
 
-
+export const ORDER_REQUEST = 'ORDER_REQUEST';
+export const ORDER_SUCCESS = 'ORDER_SUCCESS';
+export const ORDER_FAILURE = 'ORDER_FAILURE';
