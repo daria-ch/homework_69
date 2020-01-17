@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
-import {getPrice, initDishes, removeFromCart} from "../../store/actions/cartActions";
+import {initDishes, removeFromCart} from "../../store/actions/cartActions";
 import './Cart.css';
 import List from "../../components/List/List";
 import Modal from "../../components/UI/Modal/Modal";
@@ -34,14 +34,17 @@ class Cart extends Component {
     };
 
     render() {
-
         const list = Object.keys(this.props.dishes).map(dish => {
-            return <List
-                key={dish}
-                text={dish}
-                amount={this.props.dishes[dish]}
-                // price={() => this.props.getPrice(dish)}
-                onClick={() => this.props.removeFromCart(dish)}/>
+            const item = this.props.menu.filter(food => food.name === dish)[0];
+            if (item) {
+                const price = item.price * this.props.dishes[dish];
+                return <List
+                    key={dish}
+                    text={dish}
+                    amount={this.props.dishes[dish]}
+                    price={price}
+                    onClick={() => this.props.removeFromCart(dish)}/>
+            }
         });
 
         if (!this.isPurchasable()) {
@@ -74,6 +77,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => ({
+    menu: state.dishes.dishes,
     dishes: state.cart.dishes,
     total: state.cart.total,
     delivery: state.cart.delivery
@@ -81,7 +85,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     initDishes: () => dispatch(initDishes()),
-    getPrice: dish => dispatch(getPrice(dish)),
     removeFromCart: dish => dispatch(removeFromCart(dish))
 });
 

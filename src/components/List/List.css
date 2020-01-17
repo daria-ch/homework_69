@@ -3,4 +3,12 @@
     padding: 5px 0px;
     text-align: left;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+}
+.price{
+    margin-left: auto;
+}
+.amount{
+    margin-left: 10px;
 }

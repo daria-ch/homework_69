@@ -1,4 +1,4 @@
-import {ADD_TO_CART, GET_PRICE, INIT_DISHES, REMOVE_FROM_CART} from "../actions/actionTypes";
+import {ADD_TO_CART, INIT_DISHES, REMOVE_FROM_CART} from "../actions/actionTypes";
 
 const initialState = {
     dishes: {
@@ -8,7 +8,6 @@ const initialState = {
     },
     delivery: 150,
     total: 150,
-    price: 0
 };
 
 const INITIAL_DISHES = {
@@ -48,11 +47,6 @@ const cartReducer = (state = initialState, action) => {
                     [action.dish]: state.dishes[action.dish] - 1
                 },
                 total: state.total - DISH_INITIAL_PRICES[action.dish]
-            };
-        case GET_PRICE:
-            return {
-                ...state,
-                price: INITIAL_DISHES[action.dish] * DISH_INITIAL_PRICES[action.dish]
             };
         case INIT_DISHES:
             return {

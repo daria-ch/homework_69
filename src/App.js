@@ -5,6 +5,7 @@ import OrderApp from "./containers/OrderApp/OrderApp";
 const App = () => (
     <Switch>
         <Route path='/' exact component={OrderApp}/>
+        <Route render={() => <h1>Not found</h1>}/>
     </Switch>
 );
 
