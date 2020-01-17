@@ -2,6 +2,7 @@
     text-align: left;
     font-size: 20px;
     margin-bottom: 40px;
+    position: relative;
 }
 
 .orderButton {
@@ -13,4 +14,8 @@
     box-shadow: 1px 1px 0px 0px rgba(50, 50, 50, 0.75);
     outline: none;
     color: #000;
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
 }

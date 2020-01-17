@@ -5,9 +5,9 @@ import './Cart.css';
 import List from "../../components/List/List";
 import Modal from "../../components/UI/Modal/Modal";
 import CartList from "../../components/CartList/CartList";
-import Button from "../../components/UI/Button/Button";
+import InfoForm from "../../components/InfoForm/InfoForm";
 
-let list = null;
+let cart = null;
 
 class Cart extends Component {
     state = {
@@ -35,39 +35,40 @@ class Cart extends Component {
 
     render() {
 
-        if (!this.props.dishes) {
-            list = <p>Cart is empty</p>
-        } else {
-            list = Object.keys(this.props.dishes).map(dish => {
-                    return <List
-                        key={dish}
-                        text={dish}
-                        amount={this.props.dishes[dish]}
-                        price={() => this.props.getPrice(dish)}
-                        onClick={() => this.props.removeFromCart(dish)}/>
-                }
-            )
-        }
+        const list = Object.keys(this.props.dishes).map(dish => {
+            return <List
+                key={dish}
+                text={dish}
+                amount={this.props.dishes[dish]}
+                // price={() => this.props.getPrice(dish)}
+                onClick={() => this.props.removeFromCart(dish)}/>
+        });
 
-        return (
-            <Fragment>
-                <div className='Cart'>
-                    <h2>Cart</h2>
-                    <CartList
-                        delivery={this.props.delivery}
-                        total={this.props.total}
-                        purchasable={this.isPurchasable()}
-                        purchaseHandler={this.purchaseHandler}>
-                        {list}
-                    </CartList>
-                </div>
+        if (!this.isPurchasable()) {
+            cart = <p>Cart is empty</p>
+        } else {
+            cart = <Fragment>
+                <CartList
+                    delivery={this.props.delivery}
+                    total={this.props.total}
+                    purchasable={this.isPurchasable()}
+                    purchaseHandler={this.purchaseHandler}>
+                    {list}
+                </CartList>
                 <Modal
                     show={this.state.purchasing}
                     close={this.purchaseCancelHandler}
                 >
+                    <InfoForm/>
                 </Modal>
             </Fragment>
+        }
 
+        return (
+            <div className='Cart'>
+                <h2>Cart</h2>
+                {cart}
+            </div>
         );
     }
 }

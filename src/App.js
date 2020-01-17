@@ -1,27 +1,11 @@
-import React, {Component} from 'react';
-import Dishes from "./containers/Dishes/Dishes";
-import Cart from "./containers/Cart/Cart";
+import React from 'react';
+import {Route, Switch} from 'react-router-dom';
+import OrderApp from "./containers/OrderApp/OrderApp";
 
-class App extends Component {
-
-
-    render() {
-        const appStyle = {
-            maxWidth: '900px',
-            margin: '20px auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '10px'
-        };
-
-
-        return (
-            <div style={appStyle}>
-                <Dishes/>
-                <Cart/>
-            </div>
-        );
-    }
-}
+const App = () => (
+    <Switch>
+        <Route path='/' exact component={OrderApp}/>
+    </Switch>
+);
 
 export default App;

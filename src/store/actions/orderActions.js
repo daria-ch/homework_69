@@ -9,7 +9,7 @@ export const createOrder = order => {
     return async dispatch => {
         try {
             dispatch(orderRequest());
-            await axiosOrders.post('/orders.json', order);
+            await axiosOrders.post('/ord.json', order);
             dispatch(orderSuccess());
         } catch (e) {
             dispatch(orderFailure(e));

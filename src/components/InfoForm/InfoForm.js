@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import './InfoForm.css';
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
+import {connect} from "react-redux";
+import {createOrder} from "../../store/actions/orderActions";
+import {initDishes} from "../../store/actions/cartActions";
 
 class InfoForm extends Component {
     state = {
@@ -16,17 +19,16 @@ class InfoForm extends Component {
     orderHandler = async (event) => {
         event.preventDefault();
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+            dishes: this.props.dishes,
+            total: this.props.total,
             customer: {
                 name: this.state.name,
-                email: this.state.email,
-                street: this.state.street,
-                postal: this.state.postal
+                address: this.state.address,
+                number: this.state.number
             }
         };
         await this.props.createOrder(order);
-        this.props.history.push('/');
+        this.props.initDishes();
     };
 
 
@@ -35,13 +37,11 @@ class InfoForm extends Component {
             <form onSubmit={this.orderHandler}>
                 <input className='Input' type="text" name='name' placeholder='Your name' value={this.state.name}
                        onChange={this.valueChanged}/>
-                <input className='Input' type="email" name='email' placeholder='Your email'
-                       value={this.state.email}
+                <input className='Input' type="text" name='address' placeholder='Your address'
+                       value={this.state.address}
                        onChange={this.valueChanged}/>
-                <input className='Input' type="text" name='street' placeholder='Street address'
-                       value={this.state.street} onChange={this.valueChanged}/>
-                <input className='Input' type="text" name='postal' placeholder='Postal code'
-                       value={this.state.postal} onChange={this.valueChanged}/>
+                <input className='Input' type="text" name='number' placeholder='Your phone number'
+                       value={this.state.number} onChange={this.valueChanged}/>
                 <Button>ORDER</Button>
             </form>
         );
@@ -50,8 +50,8 @@ class InfoForm extends Component {
             form = <Spinner/>
         }
         return (
-            <div className='ContactData'>
-                <h1>Enter your contact data</h1>
+            <div>
+                <h1>Enter your data</h1>
                 {form}
             </div>
         );
@@ -60,11 +60,14 @@ class InfoForm extends Component {
 
 const mapStateToProps = state => ({
     loading: state.order.loading,
-    error: state.order.error
+    error: state.order.error,
+    dishes: state.cart.dishes,
+    total: state.cart.total
 });
 
 const mapDispatchToProps = dispatch => ({
-    createOrder: (order) => dispatch(createOrder(order))
+    createOrder: (order) => dispatch(createOrder(order)),
+    initDishes: () => dispatch(initDishes()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoForm);
